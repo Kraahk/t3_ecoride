@@ -4,6 +4,8 @@ import { LatestPost } from "@/app/_components/post";
 import { auth } from "@/server/auth";
 import { api, HydrateClient } from "@/trpc/server";
 
+import { Button } from "@/components/ui/button";
+
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });
   const session = await auth();
@@ -58,6 +60,12 @@ export default async function Home() {
               >
                 {session ? "Sign out" : "Sign in"}
               </Link>
+              <div className="p-10">
+                <Button>Test Hover</Button>
+                <Button className="bg-green-600 hover:bg-green-700">
+                  Hover test
+                </Button>
+              </div>
             </div>
           </div>
 
