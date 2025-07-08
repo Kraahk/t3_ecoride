@@ -1,0 +1,44 @@
+# Étape 1 : build des dépendances
+FROM node:20-alpine AS deps
+WORKDIR /app
+
+# Copie les fichiers nécessaires à l'installation
+COPY package.json package-lock.json ./
+
+# Installation des dépendances
+RUN npm ci
+
+# Étape 2 : build de l'application
+FROM node:20-alpine AS builder
+WORKDIR /app
+
+# Copie les fichiers de l'étape deps
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copie le reste du projet
+COPY . .
+
+# Skip validation d'env si nécessaire pour Docker
+ENV SKIP_ENV_VALIDATION=1
+
+# Build de l'application Next.js avec output standalone
+RUN npm run build
+
+# Étape 3 : image finale optimisée
+FROM node:20-alpine AS runner
+WORKDIR /app
+
+# Déclare la prod
+ENV NODE_ENV=production
+
+# Copie uniquement les fichiers nécessaires à l'exécution
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
+
+# Port exposé (Next.js par défaut)
+EXPOSE 3000
+
+# Lancement de l'app
+CMD ["node", "server.js"]

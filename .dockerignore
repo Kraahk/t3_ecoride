@@ -1,0 +1,28 @@
+# Node
+node_modules
+npm-debug.log
+pnpm-lock.yaml
+yarn.lock
+
+# Build outputs
+.next
+dist
+out
+
+# VCS
+.git
+.gitignore
+
+# Env files (si tu les injectes manuellement ou via secrets Docker)
+.env
+.env.local
+.env.development.local
+.env.production.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile*
+docker-compose*.yml

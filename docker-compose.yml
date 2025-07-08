@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eco_app
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/ecoride
+      - MONGODB_URI=mongodb://mongo:27017/ecoride
+      - NEXTAUTH_SECRET=changeme-in-prod
+      - NEXTAUTH_URL=http://localhost:3000
+      - SKIP_ENV_VALIDATION=1
+    depends_on:
+      - postgres
+      - mongo
+    volumes:
+      - .:/app 
+      - /app/node_modules 
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    container_name: eco_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecoride
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  mongo:
+    image: mongo:7
+    container_name: eco_mongo
+    restart: always
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  pgdata:
+  mongodata:

@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: DockerFile.dev
+    environment:
+      NODE_ENV: development
+      SKIP_ENV_VALIDATION: 1
+    command: npm run dev
+    volumes:
+      - .:/app
+      - /app/node_modules 
+    ports:
+      - "3000:3000"
+      - "5555:5555"
