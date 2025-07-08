@@ -9,9 +9,6 @@ RUN npm install
 # Étape 2 : copie du reste
 COPY . .
 
-# Étape 3 : génération du client Prisma
-RUN npx prisma generate
-
 # Variables utiles
 ENV NODE_ENV=development
 ENV SKIP_ENV_VALIDATION=1
