@@ -1,5 +1,5 @@
 {
-  "name": "my-t3-app",
+  "name": "wwm_ecoride",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -13,6 +13,7 @@
     "db:pull": "prisma migrate dev",
     "db:push": "prisma db pull",
     "db:studio": "prisma studio",
+    "dev:db:watch": "nodemon",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "lint": "next lint",
@@ -50,6 +51,7 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.23.0",
     "eslint-config-next": "^15.2.3",
+    "nodemon": "^3.1.10",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
